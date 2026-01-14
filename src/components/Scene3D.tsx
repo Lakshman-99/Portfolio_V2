@@ -1,6 +1,6 @@
 import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Points, PointMaterial } from "@react-three/drei";
+import { Points, PointMaterial, Stars } from "@react-three/drei";
 import * as THREE from "three";
 
 function ParticleField() {
@@ -25,32 +25,37 @@ function ParticleField() {
     return positions;
   }, []);
 
+  // Create a ref for the group to handle mouse interaction independently
+  const groupRef = useRef<THREE.Group>(null);
+
   useFrame((state, delta) => {
-    if (!ref.current) return;
+    if (!ref.current || !groupRef.current) return;
     
-    // Slow rotation
-    ref.current.rotation.x += delta * 0.05;
-    ref.current.rotation.y += delta * 0.08;
+    // Constant slow rotation for the particles themselves
+    ref.current.rotation.y += delta * 0.05;
     
-    // Follow mouse subtly
-    const targetX = (state.mouse.x * Math.PI) / 10;
-    const targetY = (state.mouse.y * Math.PI) / 10;
+    // Smooth mouse follow for the container group
+    // Use lerp for smooth transition
+    const targetX = (state.mouse.y * 0.2); // Tilt up/down
+    const targetY = (state.mouse.x * 0.2); // Tilt left/right
     
-    ref.current.rotation.x += (targetY - ref.current.rotation.x) * 0.02;
-    ref.current.rotation.y += (targetX - ref.current.rotation.y) * 0.02;
+    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetX, 0.1);
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetY, 0.1);
   });
 
   return (
-    <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
-      <PointMaterial
-        transparent
-        color="#0ea5e9"
-        size={0.015}
-        sizeAttenuation={true}
-        depthWrite={false}
-        blending={THREE.AdditiveBlending}
-      />
-    </Points>
+    <group ref={groupRef}>
+      <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
+        <PointMaterial
+          transparent
+          color="#0ea5e9"
+          size={0.015}
+          sizeAttenuation={true}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+        />
+      </Points>
+    </group>
   );
 }
 
@@ -76,49 +81,6 @@ function FloatingGrid() {
   );
 }
 
-function ConnectionLines() {
-  const ref = useRef<THREE.LineSegments>(null);
-
-  const geometry = useMemo(() => {
-    const points: THREE.Vector3[] = [];
-    const nodeCount = 30;
-    const nodes: THREE.Vector3[] = [];
-
-    // Create random nodes
-    for (let i = 0; i < nodeCount; i++) {
-      const x = (Math.random() - 0.5) * 6;
-      const y = (Math.random() - 0.5) * 6;
-      const z = (Math.random() - 0.5) * 6;
-      nodes.push(new THREE.Vector3(x, y, z));
-    }
-
-    // Connect nearby nodes
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const distance = nodes[i].distanceTo(nodes[j]);
-        if (distance < 2) {
-          points.push(nodes[i], nodes[j]);
-        }
-      }
-    }
-
-    const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    return geometry;
-  }, []);
-
-  useFrame((state, delta) => {
-    if (!ref.current) return;
-    ref.current.rotation.y += delta * 0.03;
-    ref.current.rotation.x += delta * 0.02;
-  });
-
-  return (
-    <lineSegments ref={ref} geometry={geometry}>
-      <lineBasicMaterial color="#22c55e" transparent opacity={0.3} />
-    </lineSegments>
-  );
-}
-
 export const Scene3D = () => {
   return (
     <div className="absolute inset-0 pointer-events-none">
@@ -128,8 +90,8 @@ export const Scene3D = () => {
         dpr={[1, 2]}
       >
         <ambientLight intensity={0.5} />
+        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
         <ParticleField />
-        <ConnectionLines />
         <FloatingGrid />
       </Canvas>
     </div>

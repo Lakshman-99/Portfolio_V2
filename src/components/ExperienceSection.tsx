@@ -1,52 +1,62 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Building2, Calendar, ChevronRight } from "lucide-react";
+import { Building2, Calendar, ChevronRight, MapPin } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const experiences = [
   {
     company: "Origin AI",
-    role: "Senior Full Stack Developer",
-    period: "2023 - Present",
+    role: "Software Engineer Co-op",
+    period: "July 2025 - Jan. 2026",
     type: "Deploy",
-    description: "Leading development of AI-powered analytics platform",
+    location: "Rockville, MD",
+    team: "Trushield & AI Engine",
+    logo: "/logo/originai.png",
     achievements: [
-      "Architected microservices handling 1M+ daily requests",
-      "Reduced API response time by 60% through Redis caching",
-      "Implemented real-time data streaming with WebSocket",
+      "Re-architected export engine using Redis/BullMQ, achieving 99.9% reliability",
+      "Optimized 4GB+ dataset processing on 128MB memory using Node.js streams",
+      "Reduced API execution time from 20 mins to <5s for research team",
+      "Developed automated daily export feature to S3 for AI/ML training data",
     ],
-    tech: ["React", "Node.js", "AWS", "Redis", "PostgreSQL"],
+    tech: ["Next.js", "AWS", "Redis", "BullMQ", "Node.js"],
   },
   {
     company: "Zoho Corporation",
-    role: "DevOps Engineer",
-    period: "2021 - 2023",
-    type: "Test",
-    description: "Building and maintaining cloud infrastructure",
+    role: "Member Technical Staff",
+    period: "Jan. 2023 - Aug. 2024",
+    type: "Build",
+    location: "Chennai, TN",
+    team: "ServiceDesk Plus (ITSM SaaS Product)",
+    logo: "/logo/zoho2.png",
     achievements: [
-      "Designed CI/CD pipelines reducing deployment time by 80%",
-      "Managed Kubernetes clusters serving 100K+ users",
-      "Automated infrastructure with Terraform and Ansible",
+      "Led redesign of Asset module User Defined Fields for 1000+ enterprise clients",
+      "Cut manual filtering effort by 60% with custom asset-view feature",
+      "Automated EOSL tracking for 8K+ assets, eliminating manual entry",
+      "Built CLI tool to populate 500+ form fields, saving 30 mins/day per dev",
     ],
-    tech: ["Kubernetes", "Docker", "Terraform", "Jenkins", "AWS"],
+    tech: ["Java", "JavaScript", "Python", "SQL", "AJAX"],
   },
   {
-    company: "Tech Startup Co-op",
-    role: "Full Stack Developer",
-    period: "2019 - 2021",
-    type: "Build",
-    description: "Developing scalable web applications",
+    company: "Zoho Corporation",
+    role: "Software Developer Intern",
+    period: "April 2022 - May 2022",
+    type: "Learn",
+    location: "Chennai, TN, India",
+    team: "Internship Trainee",
+    logo: "/logo/zoho2.png",
     achievements: [
-      "Built e-commerce platform processing $2M+ transactions",
-      "Implemented OAuth 2.0 authentication system",
-      "Optimized database queries improving performance by 40%",
+      "Honed expertise in Java programming and Object-Oriented Programming (OOP)",
+      "Designed and developed a console-based movie reservation system",
+      "Integrated JDBC for efficient data storage and retrieval mechanisms",
     ],
-    tech: ["React", "Python", "Django", "PostgreSQL", "Docker"],
+    tech: ["Java", "JDBC", "OOP", "MySQL"],
   },
 ];
 
 export const ExperienceSection = () => {
   const ref = useRef(null);
+  const isMobile = useIsMobile();
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -118,33 +128,63 @@ export const ExperienceSection = () => {
               <div className={`w-full md:w-[calc(50%-3rem)] ${index % 2 === 0 ? "md:pr-0 pl-16 md:pl-0" : "md:pl-0 pl-16 md:pr-0"}`}>
                 <motion.div
                   whileHover={{ scale: 1.02 }}
-                  className={`p-6 glass rounded-xl transition-all duration-300 ${
-                    activeIndex === index ? "glow-blue" : ""
+                  className={`p-6 glass rounded-xl border border-white/5 transition-all duration-300 hover:border-white/10 ${
+                    activeIndex === index ? "glow-blue shadow-lg shadow-primary/5 ring-1 ring-primary/20" : ""
                   }`}
                   onClick={() => setActiveIndex(index)}
                 >
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="text-xl font-bold text-foreground">{exp.role}</h3>
-                      <div className="flex items-center gap-2 text-primary mt-1">
-                        <Building2 className="w-4 h-4" />
-                        <span className="font-medium">{exp.company}</span>
+                  
+                  {/* --- NEW HEADER SECTION --- */}
+                  <div className="flex flex-col md:flex-row gap-3 mb-4">
+                    {/* Logo Box */}
+                    <div className="shrink-0 flex justify-center md:justify-start">
+                      <div className="w-20 h-20 md:w-14 md:h-14 rounded-lg p-2 flex items-center justify-center shadow-sm">
+                        {exp.logo ? (
+                          <img
+                            src={exp.logo}
+                            alt={exp.company}
+                            className="w-14 h-14 md:w-10 md:h-10 bg-white rounded-lg"
+                          />
+                        ) : (
+                          <Building2 className="w-14 h-14 md:w-10 md:h-10 text-primary" />
+                        )}
                       </div>
                     </div>
-                    <div className="flex items-center gap-1 text-muted-foreground text-sm font-mono">
-                      <Calendar className="w-4 h-4" />
-                      {exp.period}
+
+                    {/* Title & Metadata */}
+                    <div className="flex-1 min-w-0 text-center md:text-left">
+                      <h3 className="text-lg md:text-xl font-bold text-foreground leading-tight mb-1">
+                        {exp.role}
+                      </h3>
+
+                      <div className="text-primary font-medium mb-2">
+                        {exp.company}
+                        <span className="text-muted-foreground"> • </span>
+                        <span className="text-muted-foreground font-mono text-xs">
+                          {exp.team}
+                        </span>
+                      </div>
+
+                      {/* Date & Location */}
+                      <div className="flex flex-col md:flex-row md:justify-between gap-1 text-xs md:text-sm text-muted-foreground font-mono">
+                        <div className="flex items-center justify-center md:justify-start gap-1.5">
+                          <Calendar className="w-3.5 h-3.5" />
+                          <span>{exp.period}</span>
+                        </div>
+                        <div className="flex items-center justify-center md:justify-start gap-1.5">
+                          <MapPin className="w-3.5 h-3.5" />
+                          <span>{exp.location}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-
-                  <p className="text-muted-foreground mb-4">{exp.description}</p>
 
                   {/* Achievements */}
                   <ul className="space-y-2 mb-4">
                     {exp.achievements.map((achievement, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
                         <ChevronRight className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
-                        <span>{achievement}</span>
+                        <span className="leading-relaxed">{achievement}</span>
                       </li>
                     ))}
                   </ul>

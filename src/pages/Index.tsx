@@ -15,7 +15,7 @@ const Index = () => {
   useLenis();
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden cursor-default">
       <Navigation />
       <main>
         <HeroSection />

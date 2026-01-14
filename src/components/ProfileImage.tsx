@@ -7,6 +7,8 @@ interface ProfileImageProps {
 }
 
 export const ProfileImage = ({ imageUrl, className = "" }: ProfileImageProps) => {
+  const imageSrc = imageUrl || "/profile.jpg";
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -25,26 +27,15 @@ export const ProfileImage = ({ imageUrl, className = "" }: ProfileImageProps) =>
       {/* Image container */}
       <div className="relative rounded-full overflow-hidden glass p-1">
         <div className="w-full h-full rounded-full overflow-hidden bg-card">
-          {imageUrl ? (
-            <img
-              src={imageUrl}
-              alt="Profile"
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-secondary/20">
-              <User className="w-1/2 h-1/2 text-primary" />
-            </div>
-          )}
+          <img
+            src={imageSrc}
+            alt="Profile"
+            className="w-full h-full object-cover"
+          />
         </div>
       </div>
       
-      {/* Status indicator */}
-      <motion.div
-        animate={{ scale: [1, 1.2, 1] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-2 right-2 w-4 h-4 bg-secondary rounded-full border-2 border-background shadow-lg shadow-secondary/50"
-      />
+      <div className="absolute w-3 h-3 bg-secondary rounded-full shadow-lg shadow-secondary/50 animate-pulse z-10" style={{ bottom: '1rem', right: '1rem' }} />
     </motion.div>
   );
 };

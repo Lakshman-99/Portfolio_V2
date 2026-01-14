@@ -1,11 +1,13 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, Terminal, Server, Cloud, Code2 } from "lucide-react";
 import { Scene3D } from "./Scene3D";
-import { ProfileImage } from "./ProfileImage";
+
 import { useRef } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const HeroSection = () => {
   const ref = useRef(null);
+  const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -40,17 +42,14 @@ export const HeroSection = () => {
         style={{ y, opacity, scale }}
         className="relative z-10 text-center px-6 max-w-5xl mx-auto"
       >
-        {/* Profile Image */}
-        <div className="flex justify-center mb-8">
-          <ProfileImage className="w-32 h-32 md:w-40 md:h-40" />
-        </div>
+
 
         {/* Terminal-style intro */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-2 mb-8 glass rounded-full"
+          className={`inline-flex items-center gap-2 px-4 py-2 mb-8 glass rounded-full ${isMobile && "mt-10"}`}
         >
           <Terminal className="w-4 h-4 text-secondary" />
           <span className="font-mono text-sm text-muted-foreground">

@@ -1,22 +1,33 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { GraduationCap, BookOpen, Sparkles } from "lucide-react";
+import { GraduationCap, BookOpen, Sparkles, Calendar, MapPin, ChevronRight } from "lucide-react";
 
 const education = [
   {
-    degree: "Master of Science in Computer Science",
-    institution: "University of Technology",
-    period: "2019 - 2021",
-    description: "Specialized in Distributed Systems and Cloud Computing",
-    achievements: ["Thesis: 'Scalable Microservices Architecture'", "GPA: 3.9/4.0"],
+    degree: "MS in Information Systems",
+    institution: "Northeastern University",
+    period: "Aug. 2024 - Dec. 2026",
+    location: "Boston, MA",
+    gpa: "3.9",
+    logo: "/logo/neu.png",
+    achievements: [
+      "Built a strong foundation in application engineering by designing and developing scalable, user-centric web systems",
+      "Applied cloud computing and networking concepts to architect reliable, distributed applications",
+      "Strengthened problem-solving and algorithmic thinking through advanced coursework in program structures and algorithms"
+    ],
   },
   {
-    degree: "Bachelor of Engineering in Software",
-    institution: "State Technical University",
-    period: "2015 - 2019",
-    description: "Core focus on Software Engineering and System Design",
-    achievements: ["Dean's List - All Semesters", "Best Capstone Project Award"],
+    degree: "B.Tech. in Information Technology",
+    institution: "St. Joseph's College Of Engineering",
+    period: "Aug. 2019 - Apr. 2023",
+    location: "Chennai, TN",
+    gpa: "3.64",
+    logo: "/logo/sjce.png",
+    achievements: [
+      "Developed a solid computer science foundation across data structures, algorithms, operating systems, DBMS, and computer networks",
+      "Built full-stack applications and strengthened object-oriented design and software engineering best practices"
+    ],
   },
 ];
 
@@ -78,25 +89,59 @@ export const EducationSection = () => {
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 className="p-6 glass rounded-xl group hover:scale-[1.02] transition-all duration-300"
               >
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-primary/20 rounded-lg shrink-0 group-hover:glow-blue transition-all duration-300">
-                    <BookOpen className="w-6 h-6 text-primary" />
+                <div className="flex flex-col md:flex-row gap-3 mb-4">
+                  {/* Logo */}
+                  <div className="shrink-0 flex justify-center md:justify-start">
+                    {edu.logo ? (
+                      <img
+                        src={edu.logo}
+                        alt={edu.institution}
+                        className="w-20 h-20 md:w-14 md:h-14 rounded-lg"
+                      />
+                    ) : (
+                      <div className="w-20 h-20 md:w-14 md:h-14 flex items-center justify-center bg-primary/20 rounded-lg group-hover:glow-blue transition-all duration-300">
+                        <BookOpen className="w-8 h-8 md:w-6 md:h-6 text-primary" />
+                      </div>
+                    )}
                   </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-foreground mb-1">{edu.degree}</h4>
-                    <p className="text-primary font-medium mb-1">{edu.institution}</p>
-                    <p className="text-sm text-muted-foreground font-mono mb-3">{edu.period}</p>
-                    <p className="text-muted-foreground mb-3">{edu.description}</p>
-                    <ul className="space-y-1">
-                      {edu.achievements.map((achievement, i) => (
-                        <li key={i} className="text-sm text-secondary flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 bg-secondary rounded-full" />
-                          {achievement}
-                        </li>
-                      ))}
-                    </ul>
+
+                  {/* Title & Metadata */}
+                  <div className="flex-1 min-w-0 text-center md:text-left">
+                    <h3 className="text-lg md:text-xl font-bold text-foreground leading-tight mb-1">
+                      {edu.degree}
+                    </h3>
+
+                    <div className="text-primary font-medium mb-2">
+                      {edu.institution}
+                      <span className="text-muted-foreground"> • </span>
+                      <span className="text-muted-foreground font-mono text-sm">
+                        GPA: {edu.gpa}
+                      </span>
+                    </div>
+
+                    {/* Date & Location */}
+                    <div className="flex flex-col md:flex-row md:justify-between gap-1 text-xs md:text-sm text-muted-foreground font-mono">
+                      <div className="flex items-center justify-center md:justify-start gap-1.5">
+                        <Calendar className="w-3.5 h-3.5" />
+                        <span>{edu.period}</span>
+                      </div>
+                      <div className="flex items-center justify-center md:justify-start gap-1.5">
+                        <MapPin className="w-3.5 h-3.5" />
+                        <span>{edu.location}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
+
+                {/* Achievements */}
+                <ul className="space-y-2 mb-4">
+                  {edu.achievements.map((achievement, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <ChevronRight className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
+                      <span className="leading-relaxed">{achievement}</span>
+                    </li>
+                  ))}
+                </ul>
               </motion.div>
             ))}
           </div>
@@ -119,23 +164,30 @@ export const EducationSection = () => {
                 <span className="text-secondary">$</span> cat continuous_learning.txt
               </p>
               <p className="text-foreground mb-4">
-                Always learning, always growing. Currently exploring: 
-                <span className="text-primary"> WebAssembly</span>, 
-                <span className="text-secondary"> Rust</span>, and 
-                <span className="text-accent"> AI/ML Integration</span>.
+                Always learning, always growing. Currently focused on building 
+                <span className="text-primary"> resilient, production-grade systems </span> 
+                with an emphasis on scalability, reliability, and developer experience.
               </p>
               <div className="mt-6 space-y-3">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                  <span className="text-muted-foreground text-sm">Reading technical papers on distributed systems</span>
+                  <span className="text-muted-foreground text-sm">
+                    Designing fault-tolerant architectures (health checks, retries, graceful failures)
+                  </span>
                 </div>
+
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-secondary rounded-full animate-pulse" />
-                  <span className="text-muted-foreground text-sm">Contributing to open source projects</span>
+                  <span className="text-muted-foreground text-sm">
+                    Implementing CI/CD pipelines, containerization, and deployment orchestration
+                  </span>
                 </div>
+
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-                  <span className="text-muted-foreground text-sm">Building side projects with new technologies</span>
+                  <span className="text-muted-foreground text-sm">
+                    Building platform primitives: logging, monitoring, config management, and rollbacks
+                  </span>
                 </div>
               </div>
             </motion.div>

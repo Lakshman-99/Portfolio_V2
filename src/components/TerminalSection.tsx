@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { Terminal, Minus, X, Square, Mail, Github, Linkedin, FileText, Gamepad2 } from "lucide-react";
+import { Terminal, Minus, X, Square, Mail, Github, Linkedin, FileText, Gamepad2, ArrowRight } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface CommandOutput {
   command: string;
@@ -38,23 +39,72 @@ const commands: Record<string, React.ReactNode> = {
     </div>
   ),
   about: (
-    <div className="space-y-2">
-      <p className="text-secondary">$ cat about.txt</p>
-      <p>I'm a Software Engineer passionate about building</p>
-      <p>scalable systems that handle real-world challenges.</p>
-      <p className="mt-2">When I'm not coding, I'm probably:</p>
-      <p>• Contributing to open source</p>
-      <p>• Writing technical blog posts</p>
-      <p>• Experimenting with new technologies</p>
+    <div className="font-mono text-sm md:text-base">
+      {/* Command Prompt */}
+      <p className="text-secondary text-sm mb-4">
+        <span className="text-blue-400">~</span> $ cat about.txt
+      </p> 
+
+      <div className="flex flex-col md:flex-row gap-6 items-start">
+        
+        {/* Profile Image - Kept Round & Glowing */}
+        <div className="shrink-0 relative group">
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-green-500 to-blue-500 rounded-full opacity-30 blur group-hover:opacity-60 transition duration-500"></div>
+          <img 
+            src="/profile.jpg" 
+            alt="Profile" 
+            className="relative w-28 h-28 md:w-36 md:h-36 rounded-full border-2 border-gray-800 bg-gray-900 object-cover grayscale group-hover:grayscale-0 transition-all duration-500" 
+          />
+        </div>
+
+        {/* Narrative Content (Distinct from Neofetch) */}
+        <div className="space-y-4 w-full text-gray-300 leading-relaxed">
+          
+          {/* Professional Headline */}
+          <div className="border-l-2 border-green-500 pl-3">
+            <h1 className="text-lg font-bold text-white">Software Engineer</h1>
+            <p className="text-gray-500 text-xs italic">Focused on Scalability & Cloud-Native Systems</p>
+          </div>
+
+          {/* The Narrative Paragraph */}
+          <div>
+            <p>
+              Currently a <span className="text-green-400">Master's Student at Northeastern</span>. 
+              I specialize in high-performance web architectures and distributed systems.
+            </p>
+            <p className="mt-2 text-gray-400 text-sm">
+              Previously engineered async backend systems at <span className="text-yellow-300">Origin AI</span> and built enterprise SaaS products for 1000+ clients at <span className="text-yellow-300">Zoho Corporation</span>.
+            </p>
+          </div>
+
+          {/* Engineering Philosophy "Badges" */}
+          <div className="pt-2">
+            <p className="text-purple-400 text-xs mb-2 font-bold uppercase tracking-wider">:: Core Philosophy ::</p>
+            <div className="flex flex-wrap gap-2 text-xs">
+              <span className="bg-gray-800 border border-gray-700 px-2 py-1 rounded text-green-300">
+                #SystemDesign
+              </span>
+              <span className="bg-gray-800 border border-gray-700 px-2 py-1 rounded text-green-300">
+                #Automation
+              </span>
+              <span className="bg-gray-800 border border-gray-700 px-2 py-1 rounded text-green-300">
+                #Observability
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   ),
   contact: (
     <div className="space-y-2">
       <p className="text-secondary">$ cat contact.json</p>
       <p>{"{"}</p>
-      <p>  <span className="text-primary">"email"</span>: "hello@engineer.dev",</p>
-      <p>  <span className="text-primary">"location"</span>: "San Francisco, CA",</p>
-      <p>  <span className="text-primary">"availability"</span>: "Open to opportunities"</p>
+      <p>&nbsp; <span className="text-primary">"name"</span>: "Lakshman Siva",</p>
+      <p>&nbsp; <span className="text-primary">"email"</span>: "siva.l@northeastern.edu",</p>
+      <p>&nbsp; <span className="text-primary">"location"</span>: "Boston, MA",</p>
+      <p>&nbsp; <span className="text-primary">"status"</span>: "Open to opportunities (USA)",</p>
       <p>{"}"}</p>
     </div>
   ),
@@ -62,13 +112,13 @@ const commands: Record<string, React.ReactNode> = {
     <div className="space-y-2">
       <p className="text-secondary">$ ls social/</p>
       <div className="flex gap-6 mt-2">
-        <a href="#" className="flex items-center gap-2 text-primary hover:text-secondary transition-colors">
+        <a target="_blank" href="https://github.com/Lakshman-99" className="flex items-center gap-2 text-primary hover:text-secondary transition-colors">
           <Github className="w-4 h-4" /> GitHub
         </a>
-        <a href="#" className="flex items-center gap-2 text-primary hover:text-secondary transition-colors">
+        <a target="_blank" href="https://linkedin.com/in/lakshmansiva" className="flex items-center gap-2 text-primary hover:text-secondary transition-colors">
           <Linkedin className="w-4 h-4" /> LinkedIn
         </a>
-        <a href="#" className="flex items-center gap-2 text-primary hover:text-secondary transition-colors">
+        <a target="_blank" href="mailto:siva.l@northeastern.edu" className="flex items-center gap-2 text-primary hover:text-secondary transition-colors">
           <Mail className="w-4 h-4" /> Email
         </a>
       </div>
@@ -79,29 +129,34 @@ const commands: Record<string, React.ReactNode> = {
       <p className="text-secondary">$ download resume.pdf</p>
       <p className="text-primary flex items-center gap-2">
         <FileText className="w-4 h-4" />
-        Downloading... Done!
+        Downloading Lakshman_Resume.pdf...
       </p>
-      <p className="text-muted-foreground text-sm">(In a real implementation, this would trigger a download)</p>
     </div>
   ),
   neofetch: (
-    <div className="flex gap-8 flex-wrap">
-      <pre className="text-primary text-xs leading-tight">
+    <div className="flex gap-8 flex-wrap font-mono">
+      <pre className="text-primary text-xs leading-tight select-none">
 {`    ___      
    /   \\    
   |  E  |   
   | N G |   
   |_____|   
-    |||     
-    |||     `}
+   |||      
+   |||      `}
       </pre>
       <div className="space-y-1 text-sm">
-        <p><span className="text-primary">OS:</span> MacOS Sonoma</p>
-        <p><span className="text-primary">Shell:</span> zsh 5.9</p>
-        <p><span className="text-primary">Terminal:</span> Portfolio v2.0</p>
-        <p><span className="text-primary">Editor:</span> Neovim / VSCode</p>
-        <p><span className="text-primary">Languages:</span> TypeScript, Python, Go</p>
-        <p><span className="text-primary">Uptime:</span> 5+ years in tech</p>
+        <p><span className="text-primary font-bold">User:</span> siva.l@northeastern.edu</p>
+        <p><span className="text-primary font-bold">OS:</span> Ubuntu 24.04</p>
+        <p><span className="text-primary font-bold">Shell:</span> zsh 5.9</p>
+        <p><span className="text-primary font-bold">Editor:</span> VSCode / IntelliJ / PyCharm</p>
+        <p><span className="text-primary font-bold">Uptime:</span> 2+ years in tech</p>
+        <div className="flex gap-2 mt-2">
+           <span className="w-3 h-3 bg-red-500 rounded-full"></span>
+           <span className="w-3 h-3 bg-green-500 rounded-full"></span>
+           <span className="w-3 h-3 bg-yellow-500 rounded-full"></span>
+           <span className="w-3 h-3 bg-blue-500 rounded-full"></span>
+           <span className="w-3 h-3 bg-purple-500 rounded-full"></span>
+        </div>
       </div>
     </div>
   ),
@@ -129,8 +184,21 @@ const SnakeGame = ({ onExit }: { onExit: () => void }) => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      e.preventDefault();
       if (e.key === "Escape") {
         onExit();
+        return;
+      }
+
+      if (e.key === "r" || e.key === "R") {
+        setGame({
+          snake: [{ x: 7, y: 7 }],
+          food: { x: 10, y: 10 },
+          direction: "RIGHT",
+          score: 0,
+          gameOver: false,
+          running: true,
+        });
         return;
       }
       
@@ -141,18 +209,22 @@ const SnakeGame = ({ onExit }: { onExit: () => void }) => {
         switch (e.key) {
           case "ArrowUp":
           case "w":
+          case "W":
             if (prev.direction !== "DOWN") newDirection = "UP";
             break;
           case "ArrowDown":
           case "s":
+          case "S":
             if (prev.direction !== "UP") newDirection = "DOWN";
             break;
           case "ArrowLeft":
           case "a":
+          case "A":
             if (prev.direction !== "RIGHT") newDirection = "LEFT";
             break;
           case "ArrowRight":
           case "d":
+          case "D":
             if (prev.direction !== "LEFT") newDirection = "RIGHT";
             break;
         }
@@ -249,7 +321,7 @@ const SnakeGame = ({ onExit }: { onExit: () => void }) => {
         </div>
       </div>
       {game.gameOver ? (
-        <p className="text-destructive">Game Over! Score: {game.score}. Press ESC to exit.</p>
+        <p className="text-destructive">Game Over! Score: {game.score}. Press ESC to exit or R to retry.</p>
       ) : (
         <p className="text-muted-foreground text-xs">Use WASD or Arrow Keys. ESC to exit.</p>
       )}
@@ -259,6 +331,7 @@ const SnakeGame = ({ onExit }: { onExit: () => void }) => {
 
 export const TerminalSection = () => {
   const ref = useRef(null);
+  const isMobile = useIsMobile();
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalContentRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -315,6 +388,15 @@ export const TerminalSection = () => {
         ]);
         return;
       }
+    }
+
+    if (mainCmd === "resume") {
+      const link = document.createElement("a");
+      link.href = "/Lakshman_Resume.pdf";
+      link.download = "Lakshman_Resume.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
 
     const output = commands[mainCmd] || (
@@ -434,8 +516,12 @@ export const TerminalSection = () => {
               <div key={index} className="mb-4">
                 {item.command && (
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-secondary">{USERNAME}@{HOSTNAME}</span>
-                    <span className="text-muted-foreground">:</span>
+                    {!isMobile && (
+                      <>
+                        <span className="text-secondary">{USERNAME}@{HOSTNAME}</span>
+                        <span className="text-muted-foreground">:</span>
+                      </>
+                    )}
                     <span className="text-primary">~</span>
                     <span className="text-muted-foreground">$</span>
                     <span className="ml-1">{item.command}</span>
@@ -455,8 +541,12 @@ export const TerminalSection = () => {
             {/* Input */}
             {!showSnake && (
               <form onSubmit={handleSubmit} className="flex items-center gap-2">
-                <span className="text-secondary">{USERNAME}@{HOSTNAME}</span>
-                <span className="text-muted-foreground">:</span>
+                {!isMobile && (
+                  <>
+                    <span className="text-secondary">{USERNAME}@{HOSTNAME}</span>
+                    <span className="text-muted-foreground">:</span>
+                  </>
+                )}
                 <span className="text-primary">~</span>
                 <span className="text-muted-foreground">$</span>
                 <div className="flex-1 relative ml-1">
@@ -467,7 +557,6 @@ export const TerminalSection = () => {
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={handleKeyDown}
                     className="w-full bg-transparent outline-none caret-transparent"
-                    autoFocus
                     spellCheck={false}
                   />
                   {/* Custom cursor positioned after the text */}

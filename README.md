@@ -1,73 +1,99 @@
-# Welcome to your Lovable project
+# ⚡ Lakshman | Full Stack & DevOps Portfolio
 
-## Project info
+![Portfolio Preview](public/og.png)
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+> **Building scalable systems and fluid experiences. A journey through code, cloud, and creativity.**
 
-## How can I edit this code?
+[![React](https://img.shields.io/badge/React-18-blue?logo=react&logoColor=white)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Three.js](https://img.shields.io/badge/Three.js-R3F-black?logo=three.js&logoColor=white)](https://docs.pmnd.rs/react-three-fiber)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-There are several ways of editing your application.
+## 🚀 Overview
 
-**Use Lovable**
+Welcome to my portfolio v2. This project is a showcase of my skills as a **Full Stack & DevOps Engineer**. It goes beyond a simple static page, featuring an **interactive terminal**, **3D immersive elements**, and **smooth, hardware-accelerated animations**.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Built with modern web technologies, it demonstrates a commitment to performance, accessibility, and high-quality user experience.
 
-Changes made via Lovable will be committed automatically to this repo.
+## ✨ Key Features
 
-**Use your preferred IDE**
+- **💻 Interactive Terminal**: A fully functional command-line interface simulation that allows you to "run" commands to navigate the site and view system stats.
+- **🌐 Immersive 3D Experience**: Integrated `React Three Fiber` scenes with dynamic lighting and floating elements to create depth.
+- **🛹 Smooth Horizontal Scrolling**: Enhanced project showcase using `Lenis` for buttery smooth scroll inertia.
+- **🔗 Network Particle Background**: A dynamic, interactive background reflecting connectivity and complex systems.
+- **📊 Interactive Data Visualization**: Skills and experience visualized with `Recharts` and animated counters.
+- **🎨 Glassmorphism & Dark Mode**: A premium, dark-themed UI with glass effects and modern typography.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🛠️ Tech Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Core
+- **Framework**: [React 18](https://react.dev/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
 
-Follow these steps:
+### Design & UI
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Components**: [shadcn/ui](https://ui.shadcn.com/) (Radix UI)
+- **Icons**: [Lucide React](https://lucide.dev/), [React Icons](https://react-icons.github.io/react-icons/)
+- **Fonts**: Inter, JetBrains Mono (for Terminal)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Animation & 3D
+- **3D Engine**: [@react-three/fiber](https://docs.pmnd.rs/react-three-fiber), [@react-three/drei](https://github.com/pmndrs/drei)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Smooth Scroll**: [Lenis](https://lenis.studio/)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 📂 Project Structure
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+src/
+├── components/        # UI Building Blocks
+│   ├── ui/            # Reusable primitive components (shadcn)
+│   ├── TerminalSection.tsx  # Interactive Terminal Logic
+│   ├── Scene3D.tsx         # R3F Canvas & 3D Objects
+│   ├── ProjectsSection.tsx # Horizontal Scroll Container
+│   └── ...
+├── hooks/             # Custom React Hooks
+├── lib/               # Utilities & Helpers
+├── pages/             # Route Pages
+└── style/             # Global Styles
 ```
 
-**Edit a file directly in GitHub**
+## ⚡ Getting Started
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
 
-**Use GitHub Codespaces**
+### Installation
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/portfolio-v2.git
+   cd portfolio-v2
+   ```
 
-## What technologies are used for this project?
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-This project is built with:
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+4. **Build for production**
+   ```bash
+   npm run build
+   ```
 
-## How can I deploy this project?
+## 📝 License
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+This project is open source and available under the [MIT License](LICENSE).
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+<p align="center">
+  Built with ❤️ by <strong>Lakshman</strong>
+</p>

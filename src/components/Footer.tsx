@@ -28,12 +28,13 @@ export const Footer = () => {
             className="flex gap-4"
           >
             {[
-              { icon: Github, href: "#", label: "GitHub" },
-              { icon: Linkedin, href: "#", label: "LinkedIn" },
-              { icon: Mail, href: "#", label: "Email" },
+              { icon: Github, href: "https://github.com/Lakshman-99", label: "GitHub" },
+              { icon: Linkedin, href: "https://linkedin.com/in/lakshmansiva", label: "LinkedIn" },
+              { icon: Mail, href: "mailto:siva.l@northeastern.edu", label: "Email" },
             ].map((social) => (
               <motion.a
                 key={social.label}
+                target="_blank"
                 href={social.href}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -54,10 +55,10 @@ export const Footer = () => {
             className="text-center md:text-right"
           >
             <p className="text-sm text-muted-foreground flex items-center gap-1 justify-center md:justify-end">
-              Crafted with <Heart className="w-4 h-4 text-destructive" /> in 2024
+              Crafted with <Heart className="w-4 h-4 text-destructive" /> in 2026
             </p>
             <p className="text-xs text-muted-foreground font-mono mt-1">
-              $ echo "Made with React + Framer Motion"
+              $ git commit -m "Built with React, Three.js & Tailwind"
             </p>
           </motion.div>
         </div>
