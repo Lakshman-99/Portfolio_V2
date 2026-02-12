@@ -42,7 +42,6 @@ export const HeroSection = () => {
         style={{ y, opacity, scale }}
         className="relative z-10 text-center px-6 max-w-5xl mx-auto"
       >
-
         {/* Main Heading */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
