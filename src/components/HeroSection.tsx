@@ -68,6 +68,19 @@ export const HeroSection = () => {
           distributed systems and seamless user interfaces.
         </motion.p>
         
+        {/* Terminal-style intro */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className={`inline-flex items-center gap-2 px-4 py-2 mb-8 glass rounded-full ${isMobile && "mt-10"}`}
+        >
+          <Terminal className="w-4 h-4 text-secondary" />
+          <span className="font-mono text-sm text-muted-foreground">
+            <span className="text-secondary">$</span> initializing portfolio
+            <span className="cursor-blink text-primary">_</span>
+          </span>
+        </motion.div>
 
         {/* Floating Tech Icons */}
         <motion.div
