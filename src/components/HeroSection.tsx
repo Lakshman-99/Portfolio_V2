@@ -67,6 +67,7 @@ export const HeroSection = () => {
           Software Engineer crafting high-performance 
           distributed systems and seamless user interfaces.
         </motion.p>
+        
 
         {/* Floating Tech Icons */}
         <motion.div
