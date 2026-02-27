@@ -24,6 +24,18 @@ interface Project {
 
 const projects: Project[] = [
   {
+    title: "Code2Cloud",
+    description: "An end-to-end automated cloud deployment platform that turns every git push into a live, zero-downtime Kubernetes deployment in seconds.",
+    longDescription: "Code2Cloud is an end-to-end deployment platform that takes your app from git push to live production in seconds, automatically building containers, deploying to Kubernetes, provisioning TLS, and streaming logs via a high-performance Go worker. Built with TypeScript, Go, and Terraform in a polyglot monorepo, it replaces traditional CI/CD, domain setup, and infrastructure management with one unified, zero-downtime platform.",
+    tech: ["NestJS 11", "GraphQL", "PostgreSQL", "Go", "Redis", "Kubernetes (K3s)", "BuildKit", "Terraform", "Ansible", "Traefik", "cert-manager"],
+    imgPath: "/Projects/code2cloud.png",
+    color: "accent",
+    stats: { value: 100, suffix: "%", label: "Automated" },
+    github: "https://github.com/Lakshman-99/code2cloud",
+    demo: "https://code2cloud.lakshman.me",
+    isFeatured: true,
+  },
+  {
     title: "NextPath: Graph Algo Visualizer",
     description: "Interactive graph algorithm visualizer for BFS, DFS, Dijkstra, and A*. Features dynamic graph building and step-by-step animations.",
     longDescription: "Improved rendering performance by 70% using Zustand. Built with Next.js and React Flow to demonstrate complex algorithms intuitively.",
@@ -199,7 +211,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
           </div>
 
           <div className="flex flex-wrap gap-1.5 mb-4">
-            {project.tech.slice(0, 4).map((tech) => (
+            {project.tech.slice(0, 10).map((tech) => (
               <span
                 key={tech}
                 className={`px-2 py-0.5 text-xs font-mono rounded ${
@@ -308,7 +320,7 @@ const MobileProjectCard = ({ project, index }: { project: Project; index: number
           </div>
 
           <div className="flex flex-wrap gap-1.5 mb-4">
-            {project.tech.slice(0, 4).map((tech) => (
+            {project.tech.slice(0, 10).map((tech) => (
               <span
                 key={tech}
                 className={`px-2 py-0.5 text-xs font-mono rounded ${

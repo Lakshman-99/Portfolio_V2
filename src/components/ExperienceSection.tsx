@@ -6,6 +6,21 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const experiences = [
   {
+    company: "Northeastern University",
+    role: "Web Developer",
+    period: "Jan. 2026 - Current",
+    type: "grow",
+    location: "Boston, MA",
+    team: "The Movements Undercommons",
+    logo: "/logo/neu.png",
+    achievements: [
+      "Led migration of legacy 10+ year-old codebase to modern MVC architecture, improving maintainability and scalability",
+      "Implemented secure authentication and authorization using Passport.js, enhancing user data protection",
+      "Used human motion capture and Three.js to create an interactive 3D visualization of social movement data, increasing user engagement by 40%",
+    ],
+    tech: ["MVC", "AWS", "S3", "Passport.js", "MongoDB", "Node.js", "Express", "Three.js", "BVH Animation"],
+  },
+  {
     company: "Origin AI",
     role: "Software Engineer Co-op",
     period: "July 2025 - Jan. 2026",
